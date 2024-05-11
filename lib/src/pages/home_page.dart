@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quitandaapp/src/config/custom_colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -7,16 +8,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Bem vindo ao Quitada',
           style: TextStyle(
-            color: Colors.white,
+            color: CustomColors.customCardColor,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: CustomColors.customSwatchColor,
       ),
       body: Container(
         padding: const EdgeInsets.all(16),

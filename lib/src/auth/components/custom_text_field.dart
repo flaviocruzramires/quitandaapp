@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
+import 'package:quitandaapp/src/config/custom_colors.dart';
 
 class CustomTextField extends StatefulWidget {
   final String textoHint;
@@ -8,12 +9,15 @@ class CustomTextField extends StatefulWidget {
 
   final bool ehSecreto;
 
+  final List<TextInputFormatter>? inputFormatters;
+
   const CustomTextField({
     super.key,
     required this.textoHint,
     required this.textoLabel,
     required this.iconPrefixo,
     this.ehSecreto = false,
+    this.inputFormatters,
   });
 
   @override
@@ -35,6 +39,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
         obscureText: ehOculto,
+        inputFormatters: widget.inputFormatters,
         decoration: InputDecoration(
           suffixIcon: widget.ehSecreto
               ? IconButton(
@@ -45,7 +50,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   },
                   icon: Icon(
                     ehOculto ? Icons.visibility : Icons.visibility_off,
-                    color: Colors.black54,
+                    color: CustomColors.customDarkColor,
                   ),
                 )
               : null,
@@ -53,13 +58,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
           isDense: true,
           hintText: widget.textoHint,
           labelText: widget.textoLabel,
-          labelStyle: const TextStyle(
-            color: Colors.black,
+          labelStyle: TextStyle(
+            color: CustomColors.customDarkColor,
           ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(18),
-            borderSide: const BorderSide(
-              color: Colors.black26,
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: CustomColors.customSwatchColor,
             ),
           ),
         ),
