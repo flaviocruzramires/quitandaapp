@@ -1,54 +1,25 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:quitandaapp/src/auth/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/auth/components/custom_text_field.dart';
+import 'package:quitandaapp/src/auth/components/text_animation.dart';
 import 'package:quitandaapp/src/auth/signup_screen.dart';
+import 'package:quitandaapp/src/base/base_screen.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
 
 class SigInScreean extends StatelessWidget {
   const SigInScreean({super.key});
+
+  CustomAppBar appBar() => const CustomAppBar(
+        actions: [],
+      );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColors.customSwatchColor,
       // App Bar
-      appBar: AppBar(
-        backgroundColor: CustomColors.customSwatchColor,
-        centerTitle: true,
-        elevation: 3,
-        title: Column(
-          children: [
-            Text.rich(
-              TextSpan(
-                style: const TextStyle(fontSize: 40),
-                children: [
-                  const TextSpan(
-                    text: "Horti",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35),
-                  ),
-                  TextSpan(
-                    text: "fruti",
-                    style: TextStyle(
-                        color: CustomColors.customContrastColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35),
-                  ),
-                  const TextSpan(
-                    text: "Jockei",
-                    style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar: appBar(),
       // Body Section
       body: SingleChildScrollView(
         child: SizedBox(
@@ -60,7 +31,8 @@ class SigInScreean extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    getListaPromocoes(),
+                    TextAnimation(textList: obterpromocoes()),
+                    //getListaPromocoes(),
                     const SizedBox(
                       height: 60,
                     ),
@@ -104,7 +76,11 @@ class SigInScreean extends StatelessWidget {
                           ),
                           backgroundColor: Colors.green,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const BaseScreen(),
+                          ));
+                        },
                         child: const Text("Entrar",
                             style: TextStyle(
                               color: Colors.white,

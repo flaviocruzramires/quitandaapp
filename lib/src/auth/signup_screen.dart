@@ -2,12 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:quitandaapp/src/auth/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/auth/components/custom_text_field.dart';
 import 'package:quitandaapp/src/config/custom_buttons.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
+
+  CustomAppBar appBar() => const CustomAppBar(
+        actions: [],
+      );
 
   final cpfFormatter = MaskTextInputFormatter(
     mask: '###.###.###-##',
@@ -28,19 +33,7 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: CustomColors.customSwatchColor,
       // App Bar
-      appBar: AppBar(
-        backgroundColor: CustomColors.customSwatchColor,
-        centerTitle: true,
-        elevation: 3,
-        iconTheme: IconThemeData(color: CustomColors.customCardColor),
-        title: Text(
-          "Crie sua conta",
-          style: TextStyle(
-            color: CustomColors.customCardColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      appBar: appBar(),
       // Body Section
       body: SingleChildScrollView(
         child: SizedBox(
