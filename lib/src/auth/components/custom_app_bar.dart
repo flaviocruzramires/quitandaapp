@@ -23,21 +23,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 35),
+                        fontSize: 25),
                   ),
                   TextSpan(
                     text: "fruti",
                     style: TextStyle(
                         color: CustomColors.customContrastColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: 35),
+                        fontSize: 25),
                   ),
                   const TextSpan(
                     text: "Jockei",
                     style: TextStyle(
                         color: Colors.black87,
                         fontWeight: FontWeight.bold,
-                        fontSize: 35),
+                        fontSize: 25),
                   ),
                 ],
               ),

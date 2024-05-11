@@ -7,9 +7,12 @@ class CardTab extends StatelessWidget {
 
   CustomAppBar appBar() => CustomAppBar(
         actions: [
-          Icon(
-            Icons.info,
-            color: CustomColors.customCardColor,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Icon(
+              Icons.info,
+              color: CustomColors.customCardColor,
+            ),
           ),
         ],
       );
