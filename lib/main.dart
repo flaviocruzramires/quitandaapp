@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quitandaapp/src/auth/signin_screen.dart';
+import 'package:quitandaapp/src/pages/auth/signin_screen.dart';
 
 void main() {
   runApp(const MyApp());

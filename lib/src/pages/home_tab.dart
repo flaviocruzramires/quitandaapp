@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:quitandaapp/src/auth/components/category_tile.dart';
-import 'package:quitandaapp/src/auth/components/custom_app_bar.dart';
+import 'package:quitandaapp/src/pages/auth/components/category_tile.dart';
+import 'package:quitandaapp/src/pages/auth/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
 
 class HomeTab extends StatefulWidget {
