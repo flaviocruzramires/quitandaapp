@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:quitandaapp/src/pages/auth/components/custom_app_bar.dart';
-import 'package:quitandaapp/src/pages/auth/components/custom_text_field.dart';
-import 'package:quitandaapp/src/config/custom_buttons.dart';
+import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
+import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
 
 class SignUpScreen extends StatelessWidget {

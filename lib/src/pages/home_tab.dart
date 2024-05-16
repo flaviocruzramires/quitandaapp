@@ -1,28 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:quitandaapp/src/pages/auth/components/category_tile.dart';
-import 'package:quitandaapp/src/pages/auth/components/custom_app_bar.dart';
+import 'package:quitandaapp/src/pages/components/category_tile.dart';
+import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
+import 'package:quitandaapp/src/config/app_data.dart' as app_data;
+import 'package:quitandaapp/src/pages/components/item_tile.dart';
 
 class HomeTab extends StatefulWidget {
-  HomeTab({super.key});
+  const HomeTab({super.key});
 
   @override
   State<HomeTab> createState() => _HomeTabState();
 }
 
 class _HomeTabState extends State<HomeTab> {
-  List<String> obterCategorias() {
-    return [
-      'Frutas',
-      'Verduras',
-      'Legumes',
-      'Cereais',
-      'Grãos',
-      'Temperos',
-    ];
-  }
-
   String selectCategory = 'Frutas';
 
   CustomAppBar appBar() => CustomAppBar(
@@ -99,18 +89,37 @@ class _HomeTabState extends State<HomeTab> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index) {
                 return CategoryTile(
-                    category: obterCategorias()[index],
-                    isSelected: obterCategorias()[index] == selectCategory,
+                    category: app_data.obterCategorias()[index],
+                    isSelected:
+                        app_data.obterCategorias()[index] == selectCategory,
                     onPressed: () {
                       setState(() {
-                        selectCategory = obterCategorias()[index];
+                        selectCategory = app_data.obterCategorias()[index];
                       });
                     });
               },
               separatorBuilder: (_, index) => const SizedBox(height: 10),
-              itemCount: obterCategorias().length,
+              itemCount: app_data.obterCategorias().length,
             ),
           ),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              physics: const BouncingScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 9 / 11.5,
+              ),
+              itemCount: app_data.items.length,
+              itemBuilder: (_, index) {
+                return ItemTile(
+                  item: app_data.items[index],
+                );
+              },
+            ),
+          )
         ],
       ),
     );

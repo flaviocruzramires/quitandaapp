@@ -1,8 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:quitandaapp/src/pages/auth/components/custom_app_bar.dart';
-import 'package:quitandaapp/src/pages/auth/components/custom_text_field.dart';
-import 'package:quitandaapp/src/pages/auth/components/text_animation.dart';
+import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
+import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
+import 'package:quitandaapp/src/pages/components/text_animation.dart';
 import 'package:quitandaapp/src/pages/auth/signup_screen.dart';
 import 'package:quitandaapp/src/pages/base/base_screen.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
