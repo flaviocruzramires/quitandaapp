@@ -1,3 +1,4 @@
+import 'package:quitandaapp/src/models/cart_item_model.dart';
 import 'package:quitandaapp/src/models/item_model.dart';
 
 ItemModel maca = ItemModel(
@@ -87,3 +88,30 @@ List<String> obterCategorias() {
     'Temperos',
   ];
 }
+
+List<CartItemModel> cartItems = [
+  CartItemModel(
+    item: maca,
+    quantity: 10,
+    unitPrice: 0.99,
+    totalPrice: 9.90,
+  ),
+  CartItemModel(
+    item: alface,
+    quantity: 10,
+    unitPrice: 5.50,
+    totalPrice: 55.00,
+  ),
+  CartItemModel(
+    item: laranja,
+    quantity: 1,
+    unitPrice: 10.99,
+    totalPrice: 10.99,
+  ),
+  CartItemModel(
+    item: beterraba,
+    quantity: 100,
+    unitPrice: 7.30,
+    totalPrice: 730.00,
+  ),
+];

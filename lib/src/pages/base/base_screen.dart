@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
-import 'package:quitandaapp/src/pages/card_tab.dart';
+import 'package:quitandaapp/src/pages/cart/card_tab.dart';
 import 'package:quitandaapp/src/pages/home_tab.dart';
 import 'package:quitandaapp/src/pages/pedido_tab.dart';
 import 'package:quitandaapp/src/pages/perfil_tab.dart';
@@ -27,11 +27,11 @@ class _BaseScreenState extends State<BaseScreen> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: const [
-          HomeTab(),
+        children: [
+          const HomeTab(),
           CardTab(),
-          PedidoTab(),
-          PerfilTab(),
+          const PedidoTab(),
+          const PerfilTab(),
         ],
       ),
       // BottomNavigationBar Section

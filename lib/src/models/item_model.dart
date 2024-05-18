@@ -6,6 +6,7 @@ class ItemModel {
     required this.price,
     required this.imageUrl,
     required this.unidadeMedida,
+    this.quantity = 1,
   });
 
   String itemName;
@@ -14,4 +15,5 @@ class ItemModel {
   double price;
   String imageUrl;
   String unidadeMedida;
+  int quantity = 1;
 }

@@ -14,7 +14,7 @@ class ItemTile extends StatelessWidget {
 
   UtilsServices utilsServices = UtilsServices();
 
-  Color _selectedColorPrimary = CustomColors.customSwatchColor;
+  final Color _selectedColorPrimary = CustomColors.customSwatchColor;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,11 @@ class ItemTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.asset(
-                    item.imageUrl,
+                  Hero(
+                    tag: item.imageUrl,
+                    child: Image.asset(
+                      item.imageUrl,
+                    ),
                   ),
                   Text(
                     item.itemName,
