@@ -4,14 +4,21 @@ import 'package:quitandaapp/src/models/cart_item_model.dart';
 import 'package:quitandaapp/src/pages/components/quantidade_widget.dart';
 import 'package:quitandaapp/src/services/utils_services.dart';
 
-class CartTile extends StatelessWidget {
+class CartTile extends StatefulWidget {
   CartTile({
     super.key,
     required this.cartItem,
+    required this.remove,
   });
 
-  final CartItemModel cartItem;
+  CartItemModel cartItem;
+  final Function(CartItemModel) remove;
 
+  @override
+  State<CartTile> createState() => _CartTileState();
+}
+
+class _CartTileState extends State<CartTile> {
   UtilsServices utilsServices = UtilsServices();
 
   @override
@@ -26,26 +33,40 @@ class CartTile extends StatelessWidget {
       color: Colors.white,
       child: ListTile(
         leading: Image.asset(
-          cartItem.item.imageUrl,
+          widget.cartItem.item.imageUrl,
           height: 60,
           width: 60,
         ),
         title: Text(
-          cartItem.item.itemName,
+          widget.cartItem.item.itemName,
           style: const TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 16,
           ),
         ),
-        subtitle: Text(utilsServices.priceToCurrency(cartItem.totalPrice),
-            style: TextStyle(
-              color: CustomColors.customSwatchColor,
-              fontWeight: FontWeight.bold,
-            )),
+        subtitle:
+            Text(utilsServices.priceToCurrency(widget.cartItem.totalPrice),
+                style: TextStyle(
+                  color: CustomColors.customSwatchColor,
+                  fontWeight: FontWeight.bold,
+                )),
         trailing: QuantidadeWidget(
-          value: cartItem.quantity,
-          sufixo: cartItem.item.unidadeMedida,
-          result: (item) {},
+          value: widget.cartItem.quantity,
+          sufixo: widget.cartItem.item.unidadeMedida,
+          result: (item) {
+            setState(
+              () {
+                widget.cartItem.quantity = item;
+
+                // atualizando o valor total do item carrinho
+                widget.cartItem.totalPrice = item * widget.cartItem.item.price;
+
+                if (widget.cartItem.quantity == 0) {
+                  widget.remove(widget.cartItem);
+                }
+              },
+            );
+          },
         ),
       ),
     );

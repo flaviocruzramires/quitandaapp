@@ -40,7 +40,7 @@ class QuantidadeWidget extends StatelessWidget {
                 : CustomColors.customContrastColor,
             icon: !isRemovable || value > 1 ? Icons.remove : Icons.delete,
             onPressed: () {
-              if (value == 1) return;
+              if (value == 1 && !isRemovable) return;
               int resultCount = value - 1;
               result(resultCount);
             },

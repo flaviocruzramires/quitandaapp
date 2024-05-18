@@ -7,7 +7,7 @@ import 'package:quitandaapp/src/services/utils_services.dart';
 import 'package:quitandaapp/src/config/app_data.dart' as app_data;
 
 class CardTab extends StatefulWidget {
-  CardTab({super.key});
+  const CardTab({super.key});
 
   @override
   State<CardTab> createState() => _CardTabState();
@@ -28,6 +28,20 @@ class _CardTabState extends State<CardTab> {
 
   UtilsServices utilsServices = UtilsServices();
 
+  void removerItemFromCard(CartItemModel cartItem) {
+    setState(() {
+      app_data.cartItems.remove(cartItem);
+    });
+  }
+
+  double obterTotalPedido(List<CartItemModel> cartItems) {
+    double total = 0.0;
+    for (var item in cartItems) {
+      total += item.totalPrice;
+    }
+    return total;
+  }
+
   @override
   Widget build(BuildContext context) {
     double totalGeral = 0.0;
@@ -45,6 +59,7 @@ class _CardTabState extends State<CardTab> {
                 totalGeral += app_data.cartItems[index].totalPrice;
                 return CartTile(
                   cartItem: app_data.cartItems[index],
+                  remove: removerItemFromCard,
                 );
               },
             ),
@@ -90,12 +105,36 @@ class _CardTabState extends State<CardTab> {
                     ),
                   ),
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: CustomColors.customSwatchColor,
+                SizedBox(
+                  height: 40,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: CustomColors.customSwatchColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {
+                      mostrarDialogo();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.save_as_outlined,
+                          color: CustomColors.customCardColor,
+                        ),
+                        Text(
+                          'Fechar pedido',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: CustomColors.customCardColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  onPressed: () {},
-                  child: const Text('Fechar pedido'),
                 ),
               ],
             ),
@@ -104,12 +143,33 @@ class _CardTabState extends State<CardTab> {
       ),
     );
   }
-}
 
-double obterTotalPedido(List<CartItemModel> cartItems) {
-  double total = 0.0;
-  for (var item in cartItems) {
-    total += item.totalPrice;
+  Future<bool?> mostrarDialogo() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text('Confirmar pedido'),
+          content: const Text('Deseja realmente concluir o pedido?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('Confirmar'),
+            ),
+          ],
+        );
+      },
+    );
   }
-  return total;
 }

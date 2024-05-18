@@ -2,9 +2,9 @@ import 'package:quitandaapp/src/models/item_model.dart';
 
 class CartItemModel {
   final ItemModel item;
-  final int quantity;
+  int quantity;
   final double unitPrice;
-  final double totalPrice;
+  double totalPrice;
 
   CartItemModel({
     required this.item,
