@@ -44,8 +44,6 @@ class _CardTabState extends State<CardTab> {
 
   @override
   Widget build(BuildContext context) {
-    double totalGeral = 0.0;
-
     return Scaffold(
       appBar: appBar(),
       body: Column(
@@ -56,7 +54,6 @@ class _CardTabState extends State<CardTab> {
               padding: const EdgeInsets.all(2),
               itemCount: app_data.cartItems.length,
               itemBuilder: (_, index) {
-                totalGeral += app_data.cartItems[index].totalPrice;
                 return CartTile(
                   cartItem: app_data.cartItems[index],
                   remove: removerItemFromCard,
@@ -145,7 +142,7 @@ class _CardTabState extends State<CardTab> {
   }
 
   Future<bool?> mostrarDialogo() {
-    return showDialog(
+    return showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(

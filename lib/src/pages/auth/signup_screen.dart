@@ -83,10 +83,10 @@ class SignUpScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       // Field Section
-                      const CustomTextField(
+                      CustomTextField(
                         textoHint: 'Informe seu Nome',
                         textoLabel: 'Nome',
-                        iconPrefixo: Icon(Icons.person),
+                        iconPrefixo: const Icon(Icons.person),
                       ),
                       CustomTextField(
                         textoHint: 'Informe seu Celular - somente nº',
@@ -100,15 +100,15 @@ class SignUpScreen extends StatelessWidget {
                         inputFormatters: [cpfFormatter],
                         iconPrefixo: const Icon(Icons.file_copy),
                       ),
-                      const CustomTextField(
+                      CustomTextField(
                         textoHint: 'Informe seu E-Mail',
                         textoLabel: 'E-Mail',
-                        iconPrefixo: Icon(Icons.email),
+                        iconPrefixo: const Icon(Icons.email),
                       ),
-                      const CustomTextField(
+                      CustomTextField(
                         textoHint: 'Informe sua senha',
                         textoLabel: 'Senha',
-                        iconPrefixo: Icon(Icons.lock),
+                        iconPrefixo: const Icon(Icons.lock),
                         ehSecreto: true,
                       ),
                       // Botao Cadastrar

@@ -39,6 +39,22 @@ dependencies:
   mask_text_input_formatter: ^2.9.0
   badges: ^3.1.2
   intl: ^0.19.0
+  flutter_native_splash: ^2.4.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_native_splash:
+  color: "#8BC34A"
+  image: "assets/images/hortifruti_128_128.png"
+  android: true
+  ios: true
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/hortifruti_128_128.png"
+  adaptative_icon_background: "#8BC34A"
+  adaptative_icon_foregroud: "assets/images/hortifruti_128_128.png"
 
 dev_dependencies:
   flutter_test:

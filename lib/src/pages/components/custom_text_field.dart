@@ -6,18 +6,22 @@ class CustomTextField extends StatefulWidget {
   final String textoHint;
   final String textoLabel;
   final Icon iconPrefixo;
-
+  TextEditingController? controller;
+  final String? initialValue;
   final bool ehSecreto;
-
   final List<TextInputFormatter>? inputFormatters;
+  final bool ehEditavel;
 
-  const CustomTextField({
+  CustomTextField({
     super.key,
     required this.textoHint,
     required this.textoLabel,
     required this.iconPrefixo,
     this.ehSecreto = false,
     this.inputFormatters,
+    this.controller,
+    this.initialValue,
+    this.ehEditavel = true,
   });
 
   @override
@@ -38,6 +42,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
+        enabled: widget.ehEditavel,
+        controller: widget.controller,
+//        initialValue: widget.initialValue,
         obscureText: ehOculto,
         inputFormatters: widget.inputFormatters,
         decoration: InputDecoration(

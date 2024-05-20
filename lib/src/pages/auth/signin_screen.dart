@@ -54,15 +54,15 @@ class SigInScreean extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    const CustomTextField(
+                    CustomTextField(
                       textoHint: 'Informe seu E-mail',
                       textoLabel: 'E-mail',
-                      iconPrefixo: Icon(Icons.email),
+                      iconPrefixo: const Icon(Icons.email),
                     ),
-                    const CustomTextField(
+                    CustomTextField(
                       textoHint: 'Informe sua senha',
                       textoLabel: 'Senha',
-                      iconPrefixo: Icon(Icons.lock),
+                      iconPrefixo: const Icon(Icons.lock),
                       ehSecreto: true,
                     ),
                     // Botao Entrar
