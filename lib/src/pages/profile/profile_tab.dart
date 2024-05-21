@@ -206,15 +206,26 @@ class _ProfileTabState extends State<ProfileTab> {
                 const SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: CustomColors.customSwatchColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                SizedBox(
+                  height: 40,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: CustomColors.customSwatchColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      'Alterar',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: CustomColors.customCardColor,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  onPressed: () {},
-                  child: Text('Alterar'),
                 ),
               ],
             ),

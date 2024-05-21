@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
 import 'package:quitandaapp/src/pages/cart/card_tab.dart';
 import 'package:quitandaapp/src/pages/home_tab.dart';
-import 'package:quitandaapp/src/pages/pedido_tab.dart';
+import 'package:quitandaapp/src/pages/order/pedido_tab.dart';
 import 'package:quitandaapp/src/pages/profile/profile_tab.dart';
 
 class BaseScreen extends StatefulWidget {

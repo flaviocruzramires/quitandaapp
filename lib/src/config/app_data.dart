@@ -1,5 +1,7 @@
 import 'package:quitandaapp/src/models/cart_item_model.dart';
+import 'package:quitandaapp/src/models/cliente_model.dart';
 import 'package:quitandaapp/src/models/item_model.dart';
+import 'package:quitandaapp/src/models/pedido_model.dart';
 import 'package:quitandaapp/src/models/user_model.dart';
 
 ItemModel maca = ItemModel(
@@ -115,6 +117,18 @@ List<CartItemModel> cartItems = [
     unitPrice: 7.30,
     totalPrice: 730.00,
   ),
+  CartItemModel(
+    item: batata,
+    quantity: 10,
+    unitPrice: 2.50,
+    totalPrice: 25.00,
+  ),
+  CartItemModel(
+    item: tomate,
+    quantity: 10,
+    unitPrice: 2.50,
+    totalPrice: 25.00,
+  ),
 ];
 
 UserModel user = UserModel(
@@ -124,3 +138,56 @@ UserModel user = UserModel(
   cpf: '99988877766',
   password: '123456',
 );
+
+List<PedidosModel> pedidos = [
+  PedidosModel(
+    id: '4',
+    createdDateTime: DateTime.now(),
+    vencimentoQrCode: DateTime.now(),
+    itens: [
+      CartItemModel(
+        item: banana,
+        quantity: 10,
+        unitPrice: 3.99,
+        totalPrice: 39.90,
+      ),
+    ],
+    status: 'Entregue',
+    copyAndPasteQrCode: '123456789',
+    total: 9.90,
+    cliente: 'nome01',
+  ),
+  PedidosModel(
+    id: '5',
+    createdDateTime: DateTime.now(),
+    vencimentoQrCode: DateTime.now(),
+    itens: [
+      CartItemModel(
+        item: maca,
+        quantity: 10,
+        unitPrice: 0.99,
+        totalPrice: 9.90,
+      ),
+      CartItemModel(
+        item: alface,
+        quantity: 10,
+        unitPrice: 5.50,
+        totalPrice: 55.00,
+      ),
+    ],
+    status: 'Entregue',
+    copyAndPasteQrCode: '123456789',
+    total: 9.90,
+    cliente: 'nome02',
+  ),
+  PedidosModel(
+    id: '6',
+    createdDateTime: DateTime.now(),
+    vencimentoQrCode: DateTime.now(),
+    itens: cartItems,
+    status: 'Entregue',
+    copyAndPasteQrCode: '123456789',
+    total: 9.90,
+    cliente: 'nome03',
+  ),
+];
