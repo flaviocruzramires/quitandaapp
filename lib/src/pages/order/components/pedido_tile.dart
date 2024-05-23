@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:quitandaapp/src/config/custom_colors.dart';
 import 'package:quitandaapp/src/models/cart_item_model.dart';
-
 import 'package:quitandaapp/src/models/pedido_model.dart';
+import 'package:quitandaapp/src/pages/components/payment_dialog.dart';
+import 'package:quitandaapp/src/pages/order/components/pedido_status_widget.dart';
 import 'package:quitandaapp/src/services/utils_services.dart';
 
 class PedidoTile extends StatelessWidget {
@@ -23,12 +24,13 @@ class PedidoTile extends StatelessWidget {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          initiallyExpanded: true,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
                     'Pedido: ${pedidosModel.id}',
@@ -48,25 +50,34 @@ class PedidoTile extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(
-                pedidosModel.cliente,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.right,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Cliente: ${pedidosModel.cliente}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                  const Text(
+                    '(67) 9 9999-9999',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                ],
               ),
             ],
           ),
           childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Divider(
-              thickness: 1.5,
-              height: 1.5,
-              color: Colors.grey,
-            ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: 280,
               child: Row(
                 children: [
                   Expanded(
@@ -82,9 +93,19 @@ class PedidoTile extends StatelessWidget {
                       ).toList(),
                     ),
                   ),
-                  const Expanded(
+                  VerticalDivider(
+                    thickness: 1.5,
+                    width: 1.5,
+                    color: Colors.grey.shade300,
+                  ),
+                  Expanded(
                     flex: 2,
-                    child: Text('a'),
+                    child: PedidoStatusWidget(
+                      status: pedidosModel.status,
+                      qrdcodevenceu: pedidosModel.vencimentoQrCode.isBefore(
+                        DateTime.now(),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -116,10 +137,51 @@ class PedidoTile extends StatelessWidget {
                 ],
               ),
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text('Ver mais'),
-            )
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: Visibility(
+                visible: pedidosModel.status == 'pending_payment',
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: CustomColors.customSwatchColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return PaymentDialog(pedidosModel: pedidosModel);
+                      },
+                    );
+
+                    //exibirDialogoQRCode(context, pedidosModel);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.pix,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Gerar QRCode',
+                        style: TextStyle(
+                          color: CustomColors.customCardColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -156,20 +218,28 @@ class ObterItensDoPedido extends StatelessWidget {
             ' ${itempedido.quantity.toString()} ${itempedido.item.unidadeMedida} ',
             style: const TextStyle(
               fontSize: 12,
+              fontWeight: FontWeight.bold,
             ),
           ),
           Expanded(
-            child: Text(
-              itempedido.item.itemName,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                itempedido.item.itemName,
+                style: const TextStyle(
+                  fontSize: 12,
+                ),
+                textAlign: TextAlign.left,
               ),
             ),
           ),
           Text(
             utilsServices.priceToCurrency(itempedido.totalPrice),
             textAlign: TextAlign.right,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
           )
         ],
       ),
