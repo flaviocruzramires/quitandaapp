@@ -6,6 +6,7 @@ import 'package:quitandaapp/src/pages/components/text_animation.dart';
 import 'package:quitandaapp/src/pages/auth/signup_screen.dart';
 import 'package:quitandaapp/src/pages/base/base_screen.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
+import 'package:quitandaapp/src/services/utils_services.dart';
 
 class SigInScreean extends StatelessWidget {
   const SigInScreean({super.key});
@@ -36,7 +37,24 @@ class SigInScreean extends StatelessWidget {
                     const SizedBox(
                       height: 60,
                     ),
-                    Image.asset('assets/images/hortifruti_128_128.png'),
+                    GestureDetector(
+                      onTap: () {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          duration: Duration(seconds: 5),
+                          backgroundColor: Colors.green,
+                          behavior: SnackBarBehavior.floating,
+                          shape: StadiumBorder(
+                            side: BorderSide(
+                              color: Colors.green,
+                            ),
+                          ),
+                          content: Text('Funcionalidade em construção'),
+                        ));
+                      },
+                      child:
+                          Image.asset('assets/images/hortifruti_128_128.png'),
+                    ),
                   ],
                 ),
               ),
@@ -93,7 +111,13 @@ class SigInScreean extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Esqueceu a senha?'),
+                            ),
+                          );
+                        },
                         child: Text(
                           'Esqueceu a senha?',
                           style: TextStyle(

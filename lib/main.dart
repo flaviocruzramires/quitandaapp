@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quitandaapp/src/pages/auth/signin_screen.dart';
+import 'package:quitandaapp/src/pages/splash/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green[800]!),
         useMaterial3: true,
       ),
-      home: const SigInScreean(),
+      home: const SplashScreen(),
     );
   }
 }

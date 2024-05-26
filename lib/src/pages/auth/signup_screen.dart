@@ -146,6 +146,6 @@ class SignUpScreen extends StatelessWidget {
   }
 
   cadastrar() {
-    print('Cadastrado');
+    // print('Cadastrado');
   }
 }

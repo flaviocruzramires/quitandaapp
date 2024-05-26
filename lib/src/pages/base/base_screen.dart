@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
 import 'package:quitandaapp/src/pages/cart/card_tab.dart';
 import 'package:quitandaapp/src/pages/home_tab.dart';
@@ -20,6 +21,11 @@ class _BaseScreenState extends State<BaseScreen> {
   );
 
   @override
+  void initState() {
+    FToast().init(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: appBar(),
@@ -37,10 +43,12 @@ class _BaseScreenState extends State<BaseScreen> {
       // BottomNavigationBar Section
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
-          setState(() {
-            currentIndex = value;
-            pageController.jumpToPage(currentIndex);
-          });
+          setState(
+            () {
+              currentIndex = value;
+              pageController.jumpToPage(currentIndex);
+            },
+          );
         },
         selectedItemColor: CustomColors.customContrastColor,
         unselectedItemColor: CustomColors.customSwatchColor,

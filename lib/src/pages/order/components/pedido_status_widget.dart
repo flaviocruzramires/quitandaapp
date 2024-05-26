@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
 
 class PedidoStatusWidget extends StatelessWidget {
@@ -75,7 +74,7 @@ class PedidoStatusWidget extends StatelessWidget {
 }
 
 class _CustomDivider extends StatelessWidget {
-  const _CustomDivider({super.key});
+  const _CustomDivider();
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +88,6 @@ class _CustomDivider extends StatelessWidget {
 
 class _StatusDot extends StatelessWidget {
   const _StatusDot({
-    super.key,
     required this.status,
     required this.isActive,
     this.backgroundColor,

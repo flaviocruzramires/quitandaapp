@@ -17,8 +17,6 @@ class ProductScreean extends StatefulWidget {
 }
 
 class _ProductScreeanState extends State<ProductScreean> {
-  UtilsServices utilsServices = UtilsServices();
-
   int cartItemQuantidade = 1;
 
   @override
@@ -66,7 +64,7 @@ class _ProductScreeanState extends State<ProductScreean> {
                                   fontSize: 26, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              utilsServices.priceToCurrency(
+                              UtilsServices.priceToCurrency(
                                 widget.item.price,
                               ),
                               style: TextStyle(

@@ -1,5 +1,4 @@
 import 'package:quitandaapp/src/models/cart_item_model.dart';
-import 'package:quitandaapp/src/models/cliente_model.dart';
 
 class PedidosModel {
   PedidosModel({

@@ -12,15 +12,41 @@ class PaymentDialog extends StatelessWidget {
 
   final PedidosModel pedidosModel;
 
-  final utilsServices = UtilsServices();
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Column(
+      title: Column(
         children: [
-          Text(
-            'Pagamento com Pix',
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  child: Text(
+                    'Pagamento com Pix',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(
+                    Icons.close_rounded,
+                    color: CustomColors.customSwatchColor,
+                    size: 40,
+                  ),
+                ),
+              )
+            ],
           ),
         ],
       ),
@@ -55,7 +81,7 @@ class PaymentDialog extends StatelessWidget {
               ),
               const Divider(),
               Text(
-                'Vencimento: ${utilsServices.formatDateTime(pedidosModel.vencimentoQrCode.toString())} ',
+                'Vencimento: ${UtilsServices.formatDateTime(pedidosModel.vencimentoQrCode.toString())} ',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -69,7 +95,7 @@ class PaymentDialog extends StatelessWidget {
                 children: [
                   const Divider(),
                   Text(
-                    'Pedido: ${pedidosModel.id.toString()} - ${utilsServices.formatDate(pedidosModel.createdDateTime.toString())}',
+                    'Pedido: ${pedidosModel.id.toString()} - ${UtilsServices.formatDate(pedidosModel.createdDateTime.toString())}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: CustomColors.customDarkColor,
@@ -84,7 +110,7 @@ class PaymentDialog extends StatelessWidget {
                         fontSize: 18,
                       )),
                   Text(
-                    'Total Pedido: ${utilsServices.priceToCurrency(pedidosModel.total)} ',
+                    'Total Pedido: ${UtilsServices.priceToCurrency(pedidosModel.total)} ',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

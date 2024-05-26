@@ -19,8 +19,6 @@ class CartTile extends StatefulWidget {
 }
 
 class _CartTileState extends State<CartTile> {
-  UtilsServices utilsServices = UtilsServices();
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -45,7 +43,7 @@ class _CartTileState extends State<CartTile> {
           ),
         ),
         subtitle:
-            Text(utilsServices.priceToCurrency(widget.cartItem.totalPrice),
+            Text(UtilsServices.priceToCurrency(widget.cartItem.totalPrice),
                 style: TextStyle(
                   color: CustomColors.customSwatchColor,
                   fontWeight: FontWeight.bold,

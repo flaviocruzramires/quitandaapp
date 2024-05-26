@@ -21,7 +21,7 @@ class _ProfileTabState extends State<ProfileTab> {
             ),
             child: IconButton(
                 onPressed: () {
-                  const SigInScreean();
+                  SigInScreean();
                 },
                 icon: Icon(
                   Icons.exit_to_app,

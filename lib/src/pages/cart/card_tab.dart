@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quitandaapp/src/models/cart_item_model.dart';
+import 'package:quitandaapp/src/models/pedido_model.dart';
 import 'package:quitandaapp/src/pages/components/cart_tile.dart';
 import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
+import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
+import 'package:quitandaapp/src/pages/components/payment_dialog.dart';
 import 'package:quitandaapp/src/services/utils_services.dart';
 import 'package:quitandaapp/src/config/app_data.dart' as app_data;
 
@@ -26,8 +29,6 @@ class _CardTabState extends State<CardTab> {
         ],
       );
 
-  UtilsServices utilsServices = UtilsServices();
-
   void removerItemFromCard(CartItemModel cartItem) {
     setState(() {
       app_data.cartItems.remove(cartItem);
@@ -41,6 +42,8 @@ class _CardTabState extends State<CardTab> {
     }
     return total;
   }
+
+  TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -79,22 +82,43 @@ class _CardTabState extends State<CardTab> {
             ),
             child: Column(
               children: [
+                CustomTextField(
+                  textoHint: 'Nome do Cliente',
+                  textoLabel: 'Cliente',
+                  iconPrefixo: Icon(
+                    Icons.person_outline_outlined,
+                    color: CustomColors.customDarkColor,
+                  ),
+                  controller: nameController,
+                ),
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text(
-                    'Total do Carrinho',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: CustomColors.customDarkColor,
+                  child: GestureDetector(
+                    onTap: () {
+                      //
+                    },
+                    child: GestureDetector(
+                      onTap: () {
+                        UtilsServices.showToast(
+                          message: 'Carrinho de compras',
+                        );
+                      },
+                      child: Text(
+                        'Total do Carrinho',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: CustomColors.customDarkColor,
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    utilsServices
-                        .priceToCurrency(obterTotalPedido(app_data.cartItems)),
+                    UtilsServices.priceToCurrency(
+                        obterTotalPedido(app_data.cartItems)),
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -111,8 +135,31 @@ class _CardTabState extends State<CardTab> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    onPressed: () {
-                      mostrarDialogo();
+                    onPressed: () async {
+                      bool? confirmaFecharPedido = await mostrarDialogo();
+
+                      if (confirmaFecharPedido != null &&
+                          confirmaFecharPedido) {
+                        PedidosModel pedidosModel = PedidosModel(
+                          id: '${DateTime.now().millisecondsSinceEpoch}',
+                          createdDateTime: DateTime.now(),
+                          vencimentoQrCode: DateTime.now().add(
+                            const Duration(days: 5),
+                          ),
+                          total: obterTotalPedido(app_data.cartItems),
+                          cliente: nameController.text,
+                          copyAndPasteQrCode: '123456789',
+                          itens: app_data.cartItems,
+                          status: 'pending_payment',
+                        );
+
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return PaymentDialog(pedidosModel: pedidosModel);
+                          },
+                        );
+                      }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

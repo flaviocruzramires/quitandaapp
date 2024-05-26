@@ -11,8 +11,6 @@ class PedidoTile extends StatelessWidget {
 
   PedidosModel pedidosModel;
 
-  final UtilsServices utilsServices = UtilsServices();
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -24,7 +22,7 @@ class PedidoTile extends StatelessWidget {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-          initiallyExpanded: true,
+          initiallyExpanded: pedidosModel.status == 'pending_payment',
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -40,7 +38,7 @@ class PedidoTile extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    utilsServices.formatDateTime(
+                    UtilsServices.formatDateTime(
                       pedidosModel.createdDateTime.toIso8601String(),
                     ),
                     style: const TextStyle(
@@ -86,7 +84,6 @@ class PedidoTile extends StatelessWidget {
                       children: pedidosModel.itens.map(
                         (itempedido) {
                           return ObterItensDoPedido(
-                            utilsServices: utilsServices,
                             itempedido: itempedido,
                           );
                         },
@@ -126,7 +123,7 @@ class PedidoTile extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Total: ${utilsServices.priceToCurrency(
+                      'Total: ${UtilsServices.priceToCurrency(
                         obterTotalPedido(pedidosModel.itens),
                       )}',
                       style: const TextStyle(
@@ -200,11 +197,9 @@ class PedidoTile extends StatelessWidget {
 class ObterItensDoPedido extends StatelessWidget {
   const ObterItensDoPedido({
     super.key,
-    required this.utilsServices,
     required this.itempedido,
   });
 
-  final UtilsServices utilsServices;
   final CartItemModel itempedido;
   @override
   Widget build(BuildContext context) {
@@ -234,7 +229,7 @@ class ObterItensDoPedido extends StatelessWidget {
             ),
           ),
           Text(
-            utilsServices.priceToCurrency(itempedido.totalPrice),
+            UtilsServices.priceToCurrency(itempedido.totalPrice),
             textAlign: TextAlign.right,
             style: const TextStyle(
               fontSize: 12,
