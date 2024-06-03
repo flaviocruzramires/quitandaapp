@@ -1,10 +1,10 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:quitandaapp/src/config/app_data.dart' as app_data;
+import 'package:quitandaapp/src/config/custom_colors.dart';
 import 'package:quitandaapp/src/pages/cart/card_tab.dart';
 import 'package:quitandaapp/src/pages/components/category_tile.dart';
 import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
-import 'package:quitandaapp/src/config/custom_colors.dart';
-import 'package:quitandaapp/src/config/app_data.dart' as app_data;
 import 'package:quitandaapp/src/pages/components/custom_shimmer.dart';
 import 'package:quitandaapp/src/pages/components/item_tile.dart';
 

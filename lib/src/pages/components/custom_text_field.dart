@@ -11,18 +11,21 @@ class CustomTextField extends StatefulWidget {
   final bool ehSecreto;
   final List<TextInputFormatter>? inputFormatters;
   final bool ehEditavel;
+  TextInputType? inputType;
+  final String? Function(String?)? validator;
 
-  CustomTextField({
-    super.key,
-    required this.textoHint,
-    required this.textoLabel,
-    required this.iconPrefixo,
-    this.ehSecreto = false,
-    this.inputFormatters,
-    this.controller,
-    this.initialValue,
-    this.ehEditavel = true,
-  });
+  CustomTextField(
+      {super.key,
+      required this.textoHint,
+      required this.textoLabel,
+      required this.iconPrefixo,
+      this.ehSecreto = false,
+      this.inputFormatters,
+      this.controller,
+      this.initialValue,
+      this.ehEditavel = true,
+      this.inputType = TextInputType.text,
+      this.validator});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -42,9 +45,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
+        validator: widget.validator,
+        keyboardType: widget.inputType,
         enabled: widget.ehEditavel,
         controller: widget.controller,
-//        initialValue: widget.initialValue,
         obscureText: ehOculto,
         inputFormatters: widget.inputFormatters,
         decoration: InputDecoration(

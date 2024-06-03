@@ -1,19 +1,25 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quitandaapp/src/config/custom_colors.dart';
+import 'package:quitandaapp/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
 import 'package:quitandaapp/src/pages/components/text_animation.dart';
-import 'package:quitandaapp/src/pages/auth/signup_screen.dart';
-import 'package:quitandaapp/src/pages/base/base_screen.dart';
-import 'package:quitandaapp/src/config/custom_colors.dart';
-import 'package:quitandaapp/src/services/utils_services.dart';
+import 'package:quitandaapp/src/pages/exemplo_get.dart';
+import 'package:quitandaapp/src/pages_routes/app_pages.dart';
 
 class SigInScreean extends StatelessWidget {
-  const SigInScreean({super.key});
+  SigInScreean({super.key});
+
+  final _formKey = GlobalKey<FormState>();
 
   CustomAppBar appBar() => const CustomAppBar(
         actions: [],
       );
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,111 +76,147 @@ class SigInScreean extends StatelessWidget {
                   ),
                 ),
                 alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      textoHint: 'Informe seu E-mail',
-                      textoLabel: 'E-mail',
-                      iconPrefixo: const Icon(Icons.email),
-                    ),
-                    CustomTextField(
-                      textoHint: 'Informe sua senha',
-                      textoLabel: 'Senha',
-                      iconPrefixo: const Icon(Icons.lock),
-                      ehSecreto: true,
-                    ),
-                    // Botao Entrar
-                    SizedBox(
-                      height: 40,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          backgroundColor: Colors.green,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const BaseScreen(),
-                          ));
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        controller: emailController,
+                        textoHint: 'Informe seu E-mail',
+                        textoLabel: 'E-mail',
+                        iconPrefixo: const Icon(Icons.email),
+                        inputType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'E-mail obrigatório';
+                          } else if (!GetUtils.isEmail(value)) {
+                            return 'E-mail invalido';
+                          }
+                          return null;
                         },
-                        child: const Text("Entrar",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            )),
                       ),
-                    ),
-                    // Esqueceu a Senha
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Esqueceu a senha?'),
+                      CustomTextField(
+                        controller: passwordController,
+                        textoHint: 'Informe sua senha',
+                        textoLabel: 'Senha',
+                        iconPrefixo: const Icon(Icons.lock),
+                        ehSecreto: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Senha obrigatória';
+                          }
+                          return null;
+                        },
+                      ),
+                      // Botao Entrar
+                      SizedBox(
+                        height: 40,
+                        width: double.infinity,
+                        child: GetX<AuthController>(
+                          //init: AuthController(),
+                          //initState: (_) {},
+                          builder: (authController) {
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                backgroundColor: Colors.green,
+                              ),
+                              onPressed: authController.isLoading.value
+                                  ? null
+                                  : () {
+                                      FocusScope.of(context).unfocus();
+
+                                      if (_formKey.currentState!.validate()) {
+                                        authController.singIn(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        );
+                                        Get.offNamed(AppPagesRoutes.home);
+                                      } else {
+                                        //Get.offNamed(AppPagesRoutes.home);
+                                      }
+                                    },
+                              child: authController.isLoading.value
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : const Text("Entrar",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                            );
+                          },
+                        ),
+                      ),
+                      // Esqueceu a Senha
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ExemploGet(),
+                            ));
+                          },
+                          child: Text(
+                            'Esqueceu a senha?',
+                            style: TextStyle(
+                              color: CustomColors.customContrastColor,
                             ),
-                          );
-                        },
-                        child: Text(
-                          'Esqueceu a senha?',
-                          style: TextStyle(
-                            color: CustomColors.customContrastColor,
                           ),
                         ),
                       ),
-                    ),
-                    // Divisor
-                    const Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            color: Colors.black38,
-                            thickness: 2,
+                      // Divisor
+                      const Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: Colors.black38,
+                              thickness: 2,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text('Ou'),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            color: Colors.black38,
-                            thickness: 2,
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Text('Ou'),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      height: 40,
-                      width: double.infinity,
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(
-                            width: 2,
-                            color: Colors.green,
+                          Expanded(
+                            child: Divider(
+                              color: Colors.black38,
+                              thickness: 2,
+                            ),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SignUpScreen(),
-                          ));
-                        },
-                        child: const Text("Criar conta",
-                            style: TextStyle(
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        height: 40,
+                        width: double.infinity,
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(
+                              width: 2,
                               color: Colors.green,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            )),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                          onPressed: () {
+                            Get.offNamed(AppPagesRoutes.signUp);
+                          },
+                          child: const Text("Criar conta",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -222,5 +264,15 @@ class SigInScreean extends StatelessWidget {
       repeatForever: true,
       animatedTexts: [obterAnimacaoPromocoes()],
     );
+  }
+}
+
+String? valideEmail(String text) {
+  if (text.isEmpty) {
+    return 'E-mail obrigatorio';
+  } else if (!GetUtils.isEmail(text)) {
+    return 'E-mail invalido';
+  } else {
+    return null;
   }
 }

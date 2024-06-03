@@ -47,6 +47,8 @@ dependencies:
   flutter_icon_snackbar: ^1.1.7
   fluttertoast: ^8.2.5
   shimmer: ^3.0.0
+  get: ^4.6.6
+  form_validation: ^3.1.1+5
   
 
 flutter_native_splash:
