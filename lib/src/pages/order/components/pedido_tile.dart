@@ -188,7 +188,7 @@ class PedidoTile extends StatelessWidget {
   double obterTotalPedido(List<CartItemModel> cartItems) {
     double total = 0.0;
     for (var item in cartItems) {
-      total += item.totalPrice;
+      total += item.totalPrice!;
     }
     return total;
   }
@@ -210,7 +210,7 @@ class ObterItensDoPedido extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            ' ${itempedido.quantity.toString()} ${itempedido.item.unidadeMedida} ',
+            ' ${itempedido.quantity.toString()} ${itempedido.item!.unidadeMedida} ',
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -220,7 +220,7 @@ class ObterItensDoPedido extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                itempedido.item.itemName,
+                itempedido.item!.itemName,
                 style: const TextStyle(
                   fontSize: 12,
                 ),
@@ -229,7 +229,7 @@ class ObterItensDoPedido extends StatelessWidget {
             ),
           ),
           Text(
-            UtilsServices.priceToCurrency(itempedido.totalPrice),
+            UtilsServices.priceToCurrency(itempedido.totalPrice!),
             textAlign: TextAlign.right,
             style: const TextStyle(
               fontSize: 12,

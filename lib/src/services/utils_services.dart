@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:quitandaapp/src/config/custom_colors.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+import 'package:quitandaapp/src/config/custom_colors.dart';
 
 abstract class UtilsServices {
+  // Armazenamento Local
+
   static String priceToCurrency(double price) {
     NumberFormat numberFormat = NumberFormat.simpleCurrency(locale: 'pt_BR');
     return numberFormat.format(price);
@@ -69,9 +71,11 @@ abstract class UtilsServices {
     IconSnackBar.show(
       context,
       label: message,
-      snackBarType: SnackBarType.success,
+      snackBarType: isError ? SnackBarType.fail : SnackBarType.success,
       snackBarStyle: SnackBarStyle(
-        backgroundColor: CustomColors.customSwatchColor,
+        backgroundColor: isError
+            ? CustomColors.customContrastColor
+            : CustomColors.customSwatchColor,
         iconColor: Colors.white,
         maxLines: 2,
       ),

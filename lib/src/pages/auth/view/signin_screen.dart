@@ -8,6 +8,7 @@ import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
 import 'package:quitandaapp/src/pages/components/text_animation.dart';
 import 'package:quitandaapp/src/pages/exemplo_get.dart';
 import 'package:quitandaapp/src/pages_routes/app_pages.dart';
+import 'package:quitandaapp/src/services/utils_services.dart';
 
 class SigInScreean extends StatelessWidget {
   SigInScreean({super.key});
@@ -133,9 +134,21 @@ class SigInScreean extends StatelessWidget {
                                           email: emailController.text,
                                           password: passwordController.text,
                                         );
-                                        Get.offNamed(AppPagesRoutes.home);
-                                      } else {
-                                        //Get.offNamed(AppPagesRoutes.home);
+                                        if (authController.isLogged.value) {
+                                          UtilsServices.showSnackbar(
+                                            message:
+                                                'Usuário logado com sucesso',
+                                            isError: false,
+                                            context: context,
+                                          );
+                                        } else {
+                                          UtilsServices.showSnackbar(
+                                            message:
+                                                'E-mail ou senha inválidos',
+                                            isError: true,
+                                            context: context,
+                                          );
+                                        }
                                       }
                                     },
                               child: authController.isLoading.value

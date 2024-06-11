@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quitandaapp/src/config/app_data.dart' as app_data;
 import 'package:quitandaapp/src/config/custom_colors.dart';
-import 'package:quitandaapp/src/pages/auth/signin_screen.dart';
+import 'package:quitandaapp/src/pages/auth/view/signin_screen.dart';
 import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
-import 'package:quitandaapp/src/config/app_data.dart' as app_data;
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -39,10 +39,10 @@ class _ProfileTabState extends State<ProfileTab> {
     TextEditingController phoneController = TextEditingController();
     TextEditingController cpfController = TextEditingController();
 
-    nameController.text = app_data.user.name;
-    emailController.text = app_data.user.email;
-    phoneController.text = app_data.user.celular;
-    cpfController.text = app_data.user.cpf;
+    nameController.text = app_data.user.name!;
+    emailController.text = app_data.user.email!;
+    phoneController.text = app_data.user.celular!;
+    cpfController.text = app_data.user.cpf!;
 
     return Scaffold(
       appBar: appBar(),

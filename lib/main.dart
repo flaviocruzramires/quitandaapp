@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+//import 'package:quitandaapp/src/models/cart_item_model_controller.dart';
 import 'package:quitandaapp/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandaapp/src/pages_routes/app_pages.dart';
 import 'package:quitandaapp/src/services/styles_services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Get.put(AuthController());
+  // Get.put(CartItemModelController());
   runApp(const MyApp());
 }
 

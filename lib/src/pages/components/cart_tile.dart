@@ -31,33 +31,33 @@ class _CartTileState extends State<CartTile> {
       color: Colors.white,
       child: ListTile(
         leading: Image.asset(
-          widget.cartItem.item.imageUrl,
+          widget.cartItem.item!.imageUrl,
           height: 60,
           width: 60,
         ),
         title: Text(
-          widget.cartItem.item.itemName,
+          widget.cartItem.item!.itemName,
           style: const TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 16,
           ),
         ),
         subtitle:
-            Text(UtilsServices.priceToCurrency(widget.cartItem.totalPrice),
+            Text(UtilsServices.priceToCurrency(widget.cartItem.totalPrice!),
                 style: TextStyle(
                   color: CustomColors.customSwatchColor,
                   fontWeight: FontWeight.bold,
                 )),
         trailing: QuantidadeWidget(
-          value: widget.cartItem.quantity,
-          sufixo: widget.cartItem.item.unidadeMedida,
+          value: widget.cartItem.quantity!,
+          sufixo: widget.cartItem.item!.unidadeMedida,
           result: (item) {
             setState(
               () {
                 widget.cartItem.quantity = item;
 
                 // atualizando o valor total do item carrinho
-                widget.cartItem.totalPrice = item * widget.cartItem.item.price;
+                widget.cartItem.totalPrice = item * widget.cartItem.item!.price;
 
                 if (widget.cartItem.quantity == 0) {
                   widget.remove(widget.cartItem);

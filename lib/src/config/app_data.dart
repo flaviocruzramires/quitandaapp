@@ -136,6 +136,8 @@ UserModel user = UserModel(
   celular: '6799774411',
   cpf: '99988877766',
   password: '123456',
+  id: '1',
+  token: '123456789',
 );
 
 List<PedidosModel> pedidos = [
