@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:quitandaapp/src/config/app_data.dart' as app_data;
 import 'package:quitandaapp/src/config/custom_colors.dart';
-import 'package:quitandaapp/src/pages/auth/view/signin_screen.dart';
+import 'package:quitandaapp/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
 
@@ -20,14 +21,15 @@ class _ProfileTabState extends State<ProfileTab> {
               right: 20,
             ),
             child: IconButton(
-                onPressed: () {
-                  SigInScreean();
-                },
-                icon: Icon(
-                  Icons.exit_to_app,
-                  color: CustomColors.customCardColor,
-                  size: 30,
-                )),
+              onPressed: () {
+                Get.find<AuthController>().singOut();
+              },
+              icon: Icon(
+                Icons.exit_to_app,
+                color: CustomColors.customCardColor,
+                size: 30,
+              ),
+            ),
           ),
         ],
       );

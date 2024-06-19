@@ -5,8 +5,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
+import 'package:quitandaapp/src/constants/endpoint.dart';
+import 'package:quitandaapp/src/constants/storage_keys.dart';
+import 'package:quitandaapp/src/models/user_model.dart';
 import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
+import 'package:quitandaapp/src/services/http_manager.dart';
+import 'package:quitandaapp/src/services/validators.dart';
 
 //import 'ṕackage:http/http.dart' as http;
 
@@ -52,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    callBackEndPoint();
+    //callBackEndPoint();
   }
 
   CustomAppBar appBar() => const CustomAppBar(
@@ -72,6 +77,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       "#": RegExp(r'[0-9]'),
     },
   );
+
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController cpfController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 30,
                         ),
                         Text(
-                          'Informe seu dados abaixo:',
+                          'Informe seu dados abaixo',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -128,61 +141,91 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,
                   ),
-                  child: Column(
-                    children: [
-                      // Field Section
-                      CustomTextField(
-                        textoHint: 'Informe seu Nome',
-                        textoLabel: 'Nome',
-                        iconPrefixo: const Icon(Icons.person),
-                      ),
-                      CustomTextField(
-                        textoHint: 'Informe seu Celular - somente nº',
-                        textoLabel: 'Celular',
-                        inputFormatters: [celularFormatter],
-                        iconPrefixo: const Icon(Icons.phone),
-                      ),
-                      CustomTextField(
-                        textoHint: 'Informe seu CPF - somente nº',
-                        textoLabel: 'CPF',
-                        inputFormatters: [cpfFormatter],
-                        iconPrefixo: const Icon(Icons.file_copy),
-                      ),
-                      CustomTextField(
-                        textoHint: 'Informe seu E-Mail',
-                        textoLabel: 'E-Mail',
-                        iconPrefixo: const Icon(Icons.email),
-                      ),
-                      CustomTextField(
-                        textoHint: 'Informe sua senha',
-                        textoLabel: 'Senha',
-                        iconPrefixo: const Icon(Icons.lock),
-                        ehSecreto: true,
-                      ),
-                      // Botao Cadastrar
-                      TextButton(
-                        onPressed: cadastrar(),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.save,
-                              color: CustomColors.customSwatchColor,
-                              size: 24,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Cadastrar',
-                              style: TextStyle(
-                                color: CustomColors.customSwatchColor,
-                              ),
-                            )
-                          ],
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        // Field Section
+                        CustomTextField(
+                          textoHint: 'Informe seu Nome',
+                          textoLabel: 'Nome',
+                          iconPrefixo: const Icon(Icons.person),
+                          controller: nameController,
+                          validator: nomeEhValido,
+                          inputType: TextInputType.name,
                         ),
-                      )
-                    ],
+                        CustomTextField(
+                          textoHint: 'Informe seu Celular - somente nº',
+                          textoLabel: 'Celular',
+                          inputFormatters: [celularFormatter],
+                          iconPrefixo: const Icon(Icons.phone),
+                          controller: phoneController,
+                          validator: telefoneEhValido,
+                          inputType: TextInputType.phone,
+                        ),
+                        CustomTextField(
+                          textoHint: 'Informe seu CPF - somente nº',
+                          textoLabel: 'CPF',
+                          inputFormatters: [cpfFormatter],
+                          iconPrefixo: const Icon(Icons.file_copy),
+                          controller: cpfController,
+                          validator: cpfEhValido,
+                          inputType: TextInputType.number,
+                        ),
+                        CustomTextField(
+                          textoHint: 'Informe seu E-Mail',
+                          textoLabel: 'E-Mail',
+                          iconPrefixo: const Icon(Icons.email),
+                          controller: emailController,
+                          validator: emailEhValido,
+                          inputType: TextInputType.emailAddress,
+                        ),
+                        CustomTextField(
+                          textoHint: 'Informe sua senha',
+                          textoLabel: 'Senha',
+                          iconPrefixo: const Icon(Icons.lock),
+                          ehSecreto: true,
+                          controller: passwordController,
+                          validator: passwordEhValido,
+                          inputType: TextInputType.visiblePassword,
+                        ),
+                        // Botao Cadastrar
+                        TextButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              final UserModel user = UserModel(
+                                name: nameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                cpf: cpfController.text,
+                                celular: phoneController.text,
+                              );
+                              cadastrar(user.toJson());
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.save,
+                                color: CustomColors.customSwatchColor,
+                                size: 24,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Cadastrar',
+                                style: TextStyle(
+                                  color: CustomColors.customSwatchColor,
+                                  fontSize: 20,
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -193,7 +236,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  cadastrar() {
-    // print('Cadastrado');
+  cadastrar(Map<String, dynamic> user) async {
+    var result = await HttpManager().restRequest(
+      url: Endpoint.singup,
+      method: HttpMethods.post,
+      headers: StorageKeys.obterheaders(true),
+      body: user,
+    );
+    print(result);
   }
 }

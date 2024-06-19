@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
+import 'package:quitandaapp/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandaapp/src/pages/components/app_name_widget.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Get.find<AuthController>().validateToken();
+  }
 
   @override
   Widget build(BuildContext context) {

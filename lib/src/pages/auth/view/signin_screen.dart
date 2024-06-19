@@ -9,6 +9,7 @@ import 'package:quitandaapp/src/pages/components/text_animation.dart';
 import 'package:quitandaapp/src/pages/exemplo_get.dart';
 import 'package:quitandaapp/src/pages_routes/app_pages.dart';
 import 'package:quitandaapp/src/services/utils_services.dart';
+import 'package:quitandaapp/src/services/validators.dart';
 
 class SigInScreean extends StatelessWidget {
   SigInScreean({super.key});
@@ -87,14 +88,7 @@ class SigInScreean extends StatelessWidget {
                         textoLabel: 'E-mail',
                         iconPrefixo: const Icon(Icons.email),
                         inputType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'E-mail obrigatório';
-                          } else if (!GetUtils.isEmail(value)) {
-                            return 'E-mail invalido';
-                          }
-                          return null;
-                        },
+                        validator: emailEhValido,
                       ),
                       CustomTextField(
                         controller: passwordController,
@@ -102,12 +96,7 @@ class SigInScreean extends StatelessWidget {
                         textoLabel: 'Senha',
                         iconPrefixo: const Icon(Icons.lock),
                         ehSecreto: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Senha obrigatória';
-                          }
-                          return null;
-                        },
+                        validator: passwordEhValido,
                       ),
                       // Botao Entrar
                       SizedBox(

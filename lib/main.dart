@@ -6,7 +6,7 @@ import 'package:quitandaapp/src/pages_routes/app_pages.dart';
 import 'package:quitandaapp/src/services/styles_services.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
   Get.put(AuthController());
   // Get.put(CartItemModelController());
   runApp(const MyApp());
