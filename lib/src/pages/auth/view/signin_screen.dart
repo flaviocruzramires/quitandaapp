@@ -5,8 +5,8 @@ import 'package:quitandaapp/src/config/custom_colors.dart';
 import 'package:quitandaapp/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
+import 'package:quitandaapp/src/pages/components/forgot_password_dialog.dart';
 import 'package:quitandaapp/src/pages/components/text_animation.dart';
-import 'package:quitandaapp/src/pages/exemplo_get.dart';
 import 'package:quitandaapp/src/pages_routes/app_pages.dart';
 import 'package:quitandaapp/src/services/utils_services.dart';
 import 'package:quitandaapp/src/services/validators.dart';
@@ -158,10 +158,15 @@ class SigInScreean extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ExemploGet(),
-                            ));
+                          onPressed: () async {
+                            showDialog(
+                              context: context,
+                              builder: (_) {
+                                return ForgotPasswordDialog(
+                                  email: emailController.text,
+                                );
+                              },
+                            );
                           },
                           child: Text(
                             'Esqueceu a senha?',

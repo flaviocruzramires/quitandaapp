@@ -13,6 +13,8 @@ class CustomTextField extends StatefulWidget {
   final bool ehEditavel;
   TextInputType? inputType;
   final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
+  final GlobalKey<FormState>? formFieldKey;
 
   CustomTextField(
       {super.key,
@@ -25,7 +27,9 @@ class CustomTextField extends StatefulWidget {
       this.initialValue,
       this.ehEditavel = true,
       this.inputType = TextInputType.text,
-      this.validator});
+      this.validator,
+      this.onSaved,
+      this.formFieldKey});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -45,7 +49,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
+        key: widget.formFieldKey,
         validator: widget.validator,
+        onSaved: widget.onSaved,
         keyboardType: widget.inputType,
         enabled: widget.ehEditavel,
         controller: widget.controller,

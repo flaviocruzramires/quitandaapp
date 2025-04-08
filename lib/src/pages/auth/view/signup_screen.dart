@@ -1,13 +1,11 @@
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
 import 'package:quitandaapp/src/constants/endpoint.dart';
 import 'package:quitandaapp/src/constants/storage_keys.dart';
 import 'package:quitandaapp/src/models/user_model.dart';
+import 'package:quitandaapp/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandaapp/src/pages/components/custom_app_bar.dart';
 import 'package:quitandaapp/src/pages/components/custom_text_field.dart';
 import 'package:quitandaapp/src/services/http_manager.dart';
@@ -23,37 +21,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  Future<void> callBackEndPoint() async {
-    Map<String, String> headers = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-    };
-
-    Map<String, dynamic> body = {
-      'title': 'foo',
-      'body': 'bar',
-      'userId': 1,
-    };
-
-    final dio = Dio();
-
-    Response response = await dio.get(
-      'https://jsonplaceholder.typicode.com/posts',
-      options: Options(
-        headers: headers,
-      ),
-    );
-
-    if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      List posts = json.decode(response.data);
-      for (var post in posts) {
-        print(post['title']);
-      }
-    } else {
-      print(response.statusCode);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -85,6 +52,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController cpfController = TextEditingController();
+
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -153,6 +122,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           controller: nameController,
                           validator: nomeEhValido,
                           inputType: TextInputType.name,
+                          onSaved: (name) {
+                            authController.user.name = name!;
+                          },
                         ),
                         CustomTextField(
                           textoHint: 'Informe seu Celular - somente nº',
@@ -161,6 +133,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           iconPrefixo: const Icon(Icons.phone),
                           controller: phoneController,
                           validator: telefoneEhValido,
+                          onSaved: (celular) {
+                            authController.user.celular = celular!;
+                          },
                           inputType: TextInputType.phone,
                         ),
                         CustomTextField(
@@ -170,6 +145,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           iconPrefixo: const Icon(Icons.file_copy),
                           controller: cpfController,
                           validator: cpfEhValido,
+                          onSaved: (cpf) {
+                            authController.user.cpf = cpf!;
+                          },
                           inputType: TextInputType.number,
                         ),
                         CustomTextField(
@@ -178,6 +156,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           iconPrefixo: const Icon(Icons.email),
                           controller: emailController,
                           validator: emailEhValido,
+                          onSaved: (email) {
+                            authController.user.email = email!;
+                          },
                           inputType: TextInputType.emailAddress,
                         ),
                         CustomTextField(
@@ -187,6 +168,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ehSecreto: true,
                           controller: passwordController,
                           validator: passwordEhValido,
+                          onSaved: (password) {
+                            authController.user.password = password!;
+                          },
                           inputType: TextInputType.visiblePassword,
                         ),
                         // Botao Cadastrar
@@ -243,6 +227,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
       headers: StorageKeys.obterheaders(true),
       body: user,
     );
-    print(result);
   }
 }
