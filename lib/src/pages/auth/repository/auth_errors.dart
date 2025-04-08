@@ -10,6 +10,14 @@ String authErrorsString(String errorcode) {
       return 'E-mail já existe';
     case 'Ivalid_session_token':
       return 'Sessão inválida';
+    case 'INVALID_FULLNAME':
+      return 'Nome inválido';
+    case 'INVALID_PHONE':
+      return 'Celular inválido';
+
+    case 'INVALID_CPF':
+      return 'CPF inválido';
+
     default:
       return 'Erro na autenticação';
   }

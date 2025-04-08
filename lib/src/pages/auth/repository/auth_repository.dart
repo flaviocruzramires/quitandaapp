@@ -9,6 +9,22 @@ class AuthRepository {
   final HttpManager httpManager = HttpManager();
 
   // ============================================
+  //  Tratar User ou Erro
+  // ============================================
+  AuthResult handleUserOrError(Map<dynamic, dynamic> result) {
+    if (result['result'] != null) {
+      final user = UserModel.fromJson(result['result']);
+      return AuthResult.success(user);
+    } else {
+      return AuthResult.error(
+        authErrorsString(
+          result['error'],
+        ),
+      );
+    }
+  }
+
+  // ============================================
   //  Body
   // ============================================
   Map<dynamic, dynamic> obterBody({
@@ -34,7 +50,7 @@ class AuthRepository {
             'wK7GcEjr2V4br5q5mlR1kybQ5dvxMFDX0qtE1d6Y',
         StorageKeys.xParseRestApiKey:
             '2kahi62fkWePLWAwC7k8aMrtQkobogcgkruMxbeB',
-        StorageKeys.xParseSessionToken: 'r:8a815e8dd637f3a966f50ec60fccc9c4',
+        StorageKeys.xParseSessionToken: 'r:f8cff95d829930eebd82c8d2770197e3',
       };
     } else {
       return {
@@ -64,16 +80,20 @@ class AuthRepository {
       headers: obterHeaders(),
     );
 
-    if (result['result'] != null) {
-      final user = UserModel.fromJson(result['result']);
-      return AuthResult.success(user);
-    } else {
-      return AuthResult.error(
-        authErrorsString(
-          result['error'],
-        ),
-      );
-    }
+    return handleUserOrError(result);
+  }
+
+  // ============================================
+  // Metodo de cadastrar
+  // ============================================
+  Future<AuthResult> singUp({required UserModel user}) async {
+    final result = await httpManager.restRequest(
+      url: Endpoint.singup,
+      method: HttpMethods.post,
+      body: user.toJson(),
+    );
+
+    return handleUserOrError(result);
   }
 
   // ============================================
@@ -86,15 +106,20 @@ class AuthRepository {
       headers: obterHeaders(withKeyToken: true),
     );
 
-    if (result['result'] != null) {
-      final user = UserModel.fromJson(result['result']);
-      return AuthResult.success(user);
-    } else {
-      return AuthResult.error(
-        authErrorsString(
-          result['error'],
-        ),
-      );
-    }
+    return handleUserOrError(result);
+  }
+
+  // ============================================
+  // Resetar Senha
+  // ============================================
+  Future<void> resetPassword(String email) async {
+    await httpManager.restRequest(
+      url: Endpoint.resetPassword,
+      method: HttpMethods.post,
+      headers: obterHeaders(),
+      body: {
+        'email': email,
+      },
+    );
   }
 }

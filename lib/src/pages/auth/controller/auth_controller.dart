@@ -47,6 +47,24 @@ class AuthController extends GetxController {
     Get.offNamed(AppPagesRoutes.signIn);
   }
 
+  Future<void> singUp({required UserModel user}) async {
+    isLoading.value = true;
+
+    final AuthResult result = await authRepository.singUp(user: user);
+    result.when(
+      success: (user) {
+        this.user = user;
+        isLogged.value = true;
+        isLoading.value = false;
+        saveTokenAndProccedToHome();
+      },
+      error: (message) {
+        isLoading.value = false;
+      },
+    );
+    update();
+  }
+
   Future<void> singIn({
     required String email,
     required String password,
@@ -60,6 +78,7 @@ class AuthController extends GetxController {
 
     resultado.when(
       success: (user) {
+        this.user = user;
         isLogged.value = true;
         isLoading.value = false;
 
@@ -78,5 +97,9 @@ class AuthController extends GetxController {
       value: user.token!,
     );
     Get.offAllNamed(AppPagesRoutes.home);
+  }
+
+  Future<void> resetPassword(String email) async {
+    await authRepository.resetPassword(email);
   }
 }

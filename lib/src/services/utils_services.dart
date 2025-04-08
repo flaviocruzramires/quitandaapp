@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:quitandaapp/src/config/custom_colors.dart';
+import 'package:quitandaapp/src/constants/storage_keys.dart';
 
 abstract class UtilsServices {
   // Armazenamento Local
@@ -80,5 +81,28 @@ abstract class UtilsServices {
         maxLines: 2,
       ),
     );
+  }
+
+  static Map<String, dynamic> obterHeaders({
+    bool withKeyToken = false,
+  }) {
+    if (withKeyToken) {
+      return {
+        StorageKeys.contentType: 'application/json',
+        StorageKeys.xParseApplicationId:
+            'wK7GcEjr2V4br5q5mlR1kybQ5dvxMFDX0qtE1d6Y',
+        StorageKeys.xParseRestApiKey:
+            '2kahi62fkWePLWAwC7k8aMrtQkobogcgkruMxbeB',
+        StorageKeys.xParseSessionToken: 'r:f8cff95d829930eebd82c8d2770197e3',
+      };
+    } else {
+      return {
+        StorageKeys.contentType: 'application/json',
+        StorageKeys.xParseApplicationId:
+            'wK7GcEjr2V4br5q5mlR1kybQ5dvxMFDX0qtE1d6Y',
+        StorageKeys.xParseRestApiKey:
+            '2kahi62fkWePLWAwC7k8aMrtQkobogcgkruMxbeB',
+      };
+    }
   }
 }
